@@ -15,7 +15,7 @@ const EmailVerify = () => {
 
     const inputRefs = React.useRef([])
 
-    const handleInput = (e, index)=>{
+    const handleInput = (e,index)=>{
       if(e.target.value.length > 0 && index < inputRefs.current.length - 1 ){
         inputRefs.current[index + 1].focus();
       }
@@ -58,8 +58,10 @@ const EmailVerify = () => {
   }
 
   useEffect(()=>{
-    isLoggedin && userData && userData.isAccountVerified && navigate('/')
-  },[isLoggedin, userData])
+    if (isLoggedin && userData && userData.isAccountVerified) {
+            navigate('/')
+        }
+    }, [isLoggedin, userData, navigate])
 
   return (
     <div className='flex items-center justify-center min-h-screen  bg-gradient-to-br from-blue-200 to-purple-400'>
@@ -74,7 +76,7 @@ const EmailVerify = () => {
                 className='w-12 h-12 bg-[#333A5c] text-white text-center text-xl rounded-md '
                 ref={e =>inputRefs.current[index] =e}
                 onInput={(e) => handleInput(e,index)}
-                onKeyDown={(e)=>  handleKeyDown(e.index)}
+                onKeyDown={(e)=>  handleKeyDown(e,index)}
                 />
               ))}
           </div>
